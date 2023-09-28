@@ -1,2 +1,2 @@
-# UP_DN_Counter
-5-bit counter
+# UP_DN_Counter using Verilog
+please read the Specs PDF
