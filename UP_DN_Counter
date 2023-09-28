@@ -1,0 +1,56 @@
+module Up_Dn_Counter 
+(
+input wire [4:0] In,
+input wire Load,Up,Down,
+input wire Clk,
+output wire High,Low,
+output reg [4:0] Counter_Reg );
+
+
+
+wire [1:0] C ; // the selection of the 4*2 mux 
+
+
+
+always@(posedge Clk)
+ begin
+  if (Load)
+   begin
+    Counter_Reg= In ;
+   end
+  else
+   begin
+    case(C)
+	 2'b00: 
+		if (Up && !High)
+		 begin
+		  Counter_Reg <= Counter_Reg + 5'b00001;
+		 end
+		else
+		 begin
+		  Counter_Reg <= Counter_Reg;
+		 end
+	 2'b01:
+		if (Up && !High)
+		 begin
+		  Counter_Reg <= Counter_Reg + 5'b00001;
+		 end
+		else
+		 begin
+		  Counter_Reg <= Counter_Reg;
+		 end
+	3'b10 : Counter_Reg <= Counter_Reg - 5'b00001;
+	4'b11 : Counter_Reg <= Counter_Reg;
+	
+ endcase
+
+ end
+ end
+assign High =(Counter_Reg == 5'b11111);
+assign Low = (Counter_Reg == 5'b00000);
+assign C ={Down,Low};
+
+endmodule
+
+
+
